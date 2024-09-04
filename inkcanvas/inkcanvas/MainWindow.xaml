@@ -47,6 +47,18 @@
                     <RadioButton Checked="Size_Checked" Content="large"></RadioButton>
                 </StackPanel>
             </GroupBox>
+            <StackPanel Margin="10, 20">
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="New_Click" Padding="20 , 5" Margin="10" Content="New"></Button>
+                    <Button Click="Save_Click" Padding="20 , 5" Margin="10" Content="Save"></Button>
+                    <Button Click="Load_Click" Padding="20 , 5" Margin="10" Content="Load"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="Cpoe_Click" Padding="20 , 5" Margin="10" Content="Cope"></Button>
+                    <Button Click="Cut_Click" Padding="20 , 5" Margin="10" Content="Cut"></Button>
+                    <Button Click="Past_Click" Padding="20 , 5" Margin="10" Content="Past"></Button>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
         
     </Grid>

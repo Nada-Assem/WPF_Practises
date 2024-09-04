@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -88,9 +89,111 @@ namespace inkcanvas
                     ink.DefaultDrawingAttributes.Height = 15;
                     ink.DefaultDrawingAttributes.Width = 15;
                     break;
-
-
             }
         }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            ink.Strokes.Clear();
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "drawing";
+            dlg.DefaultExt = ".isf"; 
+            dlg.Filter = "Ink Serialized Format (.isf)|*.isf";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+
+                using (FileStream fs = new FileStream(filename, FileMode.Create))
+                {
+                    ink.Strokes.Save(fs);
+                }
+
+                MessageBox.Show("File saved successfully!");
+            }
+        }
+
+        private void Cpoe_Click(object sender, RoutedEventArgs e)
+        {
+            if (ink.GetSelectedStrokes().Count > 0)
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    ink.GetSelectedStrokes().Save(ms);
+                    Clipboard.SetData("InkStrokes", ms.ToArray());
+                }
+                MessageBox.Show("Selected content copied to clipboard.");
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
+        }
+
+        private void Past_Click(object sender, RoutedEventArgs e)
+        {
+            if (Clipboard.ContainsData("InkStrokes"))
+            {
+                byte[] data = (byte[])Clipboard.GetData("InkStrokes");
+                using (MemoryStream ms = new MemoryStream(data))
+                {
+                    StrokeCollection strokes = new StrokeCollection(ms);
+                    ink.Strokes.Add(strokes);
+                }
+                MessageBox.Show("Content pasted successfully.");
+            }
+            else
+            {
+                MessageBox.Show("No content available to paste.");
+            }
+        }
+
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = "Drawing";
+            dlg.Filter = "Ink Serialized Format (.isf)|*.isf"; 
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                {
+                    StrokeCollection strokes = new StrokeCollection(fs);
+                    ink.Strokes.Clear(); 
+                    ink.Strokes.Add(strokes);
+                }
+
+                MessageBox.Show("Content loaded successfully.");
+            }
+        }
+
+        private void Cut_Click(object sender, RoutedEventArgs e)
+        {
+            if (ink.GetSelectedStrokes().Count > 0)
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    ink.GetSelectedStrokes().Save(ms);
+                    Clipboard.SetData("InkStrokes", ms.ToArray());
+                }
+                ink.Strokes.Remove(ink.GetSelectedStrokes());
+                MessageBox.Show("Selected content cut to clipboard.");
+            }
+            else
+            {
+                MessageBox.Show("No strokes selected to cut.");
+            }
+        }
+
     }
 }
