@@ -69,7 +69,25 @@ namespace inkcanvas
                 case "rectangle":
                     ink.DefaultDrawingAttributes.StylusTip = StylusTip.Rectangle;
                     break;
+            }
+        }
 
+        private void Size_Checked(object sender, RoutedEventArgs e)
+        {
+            switch (((RadioButton)sender).Content.ToString())
+            {
+                case "small":
+                    ink.DefaultDrawingAttributes.Height = 3;
+                    ink.DefaultDrawingAttributes.Width = 3;
+                    break;
+                case "normal":
+                    ink.DefaultDrawingAttributes.Height = 6;
+                    ink.DefaultDrawingAttributes.Width = 6;
+                    break;
+                case "large":
+                    ink.DefaultDrawingAttributes.Height = 15;
+                    ink.DefaultDrawingAttributes.Width = 15;
+                    break;
 
 
             }

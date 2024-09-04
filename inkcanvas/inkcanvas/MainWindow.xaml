@@ -42,9 +42,9 @@
             </GroupBox>
             <GroupBox Padding="10 , 15"  Margin="15" Header="Brush Size" >
                 <StackPanel>
-                    <RadioButton>small</RadioButton>
-                    <RadioButton>normal</RadioButton>
-                    <RadioButton>large</RadioButton>
+                    <RadioButton Checked="Size_Checked" Content="small"></RadioButton>
+                    <RadioButton Checked="Size_Checked" Content="normal"></RadioButton>
+                    <RadioButton Checked="Size_Checked" Content="large"></RadioButton>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
