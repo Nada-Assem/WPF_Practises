@@ -12,8 +12,42 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Border BorderThickness="5" BorderBrush="CornflowerBlue" >
-            <InkCanvas></InkCanvas> 
+        <Border BorderThickness="5" 
+                BorderBrush="CornflowerBlue" 
+                CornerRadius="5">
+            <InkCanvas Name ="ink"></InkCanvas> 
         </Border>
+        <StackPanel Height="150" Grid.Row="1" Orientation="Horizontal">
+            <GroupBox  Margin="15" Padding="10 , 15"  Header="Colors" >
+                <StackPanel>
+                    <RadioButton Checked="Color_Checked" Content="Red"></RadioButton>
+                    <RadioButton Checked="Color_Checked" Content="Green"></RadioButton>
+                    <RadioButton Checked="Color_Checked" Content="Black"></RadioButton>
+                    <RadioButton Checked="Color_Checked" Content="Blue"></RadioButton>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Padding="10 , 15" Margin="15"  Header="Modes" >
+                <StackPanel>
+                    <RadioButton Checked="Mode_Checked" Content="ink"></RadioButton>
+                    <RadioButton Checked="Mode_Checked" Content="Select"></RadioButton>
+                    <RadioButton Checked="Mode_Checked" Content="erase"></RadioButton>
+                    <RadioButton Checked="Mode_Checked" Content="erase by stroke"></RadioButton>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Padding="10 , 15" Margin="15"  Header="Drawing Shape" >
+                <StackPanel>
+                    <RadioButton Checked="Shape_Check" Content="ellipse"></RadioButton>
+                    <RadioButton Checked="Shape_Check" Content="rectangle"></RadioButton>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Padding="10 , 15"  Margin="15" Header="Brush Size" >
+                <StackPanel>
+                    <RadioButton>small</RadioButton>
+                    <RadioButton>normal</RadioButton>
+                    <RadioButton>large</RadioButton>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        
     </Grid>
 </Window>

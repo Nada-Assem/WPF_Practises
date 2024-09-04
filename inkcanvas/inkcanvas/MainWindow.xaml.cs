@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -19,6 +20,59 @@ namespace inkcanvas
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void Color_Checked(object sender , RoutedEventArgs e)
+        {
+            switch ( ((RadioButton)sender).Content.ToString() )
+            {
+                case "Red":
+                    ink.DefaultDrawingAttributes.Color = Colors.Red;
+                    break;
+                case "Black":
+                    ink.DefaultDrawingAttributes.Color = Colors.Black;
+                    break;
+                case "Blue":
+                    ink.DefaultDrawingAttributes.Color = Colors.Blue;
+                    break;
+                case "Green":
+                    ink.DefaultDrawingAttributes.Color = Colors.Green;
+                    break;
+            }
+        }
+
+        private void Mode_Checked(object sender, RoutedEventArgs e)
+        {
+            switch(((RadioButton)sender).Content.ToString() )
+            {
+                case "ink":
+                    ink.EditingMode = InkCanvasEditingMode.Ink;
+                    break;
+                case "Select":
+                    ink.EditingMode = InkCanvasEditingMode.Select;
+                    break;
+                case "erase":
+                    ink.EditingMode = InkCanvasEditingMode.EraseByPoint;
+                    break;
+                case "erase by stroke":
+                    ink.EditingMode = InkCanvasEditingMode.EraseByStroke;
+                    break;
+            }
+        }
+
+        private void Shape_Check(object sender, RoutedEventArgs e)
+        {
+            switch( ( (RadioButton)sender).Content.ToString() )
+            {
+                case "ellipse":
+                    ink.DefaultDrawingAttributes.StylusTip = StylusTip.Ellipse;
+                    break;
+                case "rectangle":
+                    ink.DefaultDrawingAttributes.StylusTip = StylusTip.Rectangle;
+                    break;
+
+
+
+            }
         }
     }
 }
