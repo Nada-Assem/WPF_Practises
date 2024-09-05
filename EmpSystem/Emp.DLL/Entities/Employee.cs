@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Emp.DLL.Enities
+namespace Emp.DLL.Entities
 {
     public class Employee : BaseEntity
     {

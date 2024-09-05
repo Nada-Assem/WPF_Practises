@@ -1,6 +1,10 @@
-﻿using Emp.DLL.Context;
+﻿using Emp.BLL.Interfaces;
+using Emp.BLL.Services;
+using Emp.DLL.Context;
+using Emp.DLL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +35,10 @@ namespace EmpSystem
             services.AddDbContext<EmpSystemDbContext>(options =>
                 options.UseSqlServer("Server=.;Database=EmployeeDB;Trusted_Connection=True;"));
             services.AddTransient<MainWindow>();
+            services.AddTransient<EmployeeWindow>();
+
+            services.AddScoped<IGenericService<Employee>, EmployeeService>();
+            services.AddScoped<IGenericService<Deparment>, DepartmentService>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -39,14 +47,27 @@ namespace EmpSystem
             mainWindow.Show();
         }
     }
-        /// <summary>
-        /// Interaction logic for MainWindow.xaml
-        /// </summary>
-        public partial class MainWindow : Window
+
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
         {
-        public MainWindow()
-            {
+        private readonly IServiceProvider _serviceProvider;
+
+        public MainWindow(IServiceProvider serviceProvider)
+        {
             InitializeComponent();
-            }
+            _serviceProvider = serviceProvider;
+            LoadEmployeeWindowAsync();
         }
+
+        private async void LoadEmployeeWindowAsync()
+        {
+            await Task.Delay(3000);
+            var employeeWindow = _serviceProvider.GetRequiredService<EmployeeWindow>();
+            employeeWindow.Show();
+            this.Close();
+        }
+    }
 }   

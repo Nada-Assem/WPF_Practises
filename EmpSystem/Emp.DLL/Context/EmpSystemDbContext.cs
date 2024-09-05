@@ -1,4 +1,4 @@
-﻿using Emp.DLL.Enities;
+﻿using Emp.DLL.Entities;
 using Emp.DLL.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
