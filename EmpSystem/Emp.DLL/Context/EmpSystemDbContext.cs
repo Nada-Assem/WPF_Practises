@@ -1,24 +1,21 @@
 ﻿using Emp.DLL.Entities;
 using Emp.DLL.Helpers;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Emp.DLL.Context
 {
     public class EmpSystemDbContext : DbContext
     {
-        public EmpSystemDbContext(DbContextOptions<EmpSystemDbContext> options) : base(options) { }
+        public EmpSystemDbContext(DbContextOptions<EmpSystemDbContext> options)
+            : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=EmployeeDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True;");
-
+            // Configuration is done in ConfigureServices
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

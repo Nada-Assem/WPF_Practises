@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.ConstrainedExecution;
 using System.Windows;
 using System.Windows.Controls;
 using Emp.BLL.Interfaces;
@@ -21,26 +22,14 @@ namespace EmpSystem
 
         private async void LoadData()
         {
+            UpdateButton.IsEnabled = false;
+            DeleteButton.IsEnabled = false;
             var employees = await _employeeService.GetAllAsync();
             EmployeeDataGrid.ItemsSource = employees;
 
             var departments = await _departmentService.GetAllAsync();
             DepartmentComboBox.ItemsSource = departments;
             DepartmentComboBox.DisplayMemberPath = "Name";
-        }
-
-        private void EmployeeDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (EmployeeDataGrid.SelectedItem is Employee selectedEmployee)
-            {
-                // Populate the fields with the selected employee's data
-                EmployeeNameTextBox.Text = selectedEmployee.Name;
-                SalaryTextBox.Text = selectedEmployee.Salary.ToString();
-                HireDatePicker.SelectedDate = selectedEmployee.HireDate;
-
-                // Set the selected department in the ComboBox
-                DepartmentComboBox.SelectedItem = selectedEmployee.Department;
-            }
         }
 
         private async void AddButton_Click(object sender, RoutedEventArgs e)
@@ -55,6 +44,7 @@ namespace EmpSystem
 
             await _employeeService.AddAsync(newEmployee);
             LoadData();
+            Clear();
         }
 
         private async void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -68,6 +58,8 @@ namespace EmpSystem
 
                 await _employeeService.UpdateAsync(selectedEmployee);
                 LoadData();
+
+                Clear();
             }
         }
 
@@ -77,12 +69,49 @@ namespace EmpSystem
             {
                 await _employeeService.DeleteAsync(selectedEmployee.ID);
                 LoadData();
+                Clear();
             }
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            Clear();
+            AddButton.IsEnabled = true;
+            UpdateButton.IsEnabled = false;
+            DeleteButton.IsEnabled = false;
+
+            EmployeeDataGrid.SelectedItem = null;
             LoadData();
         }
+
+        private void EmployeeDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EmployeeDataGrid.SelectedItem is Employee selectedEmployee)
+            {
+                EmployeeNameTextBox.Text = selectedEmployee.Name;
+                SalaryTextBox.Text = selectedEmployee.Salary.ToString();
+                HireDatePicker.SelectedDate = selectedEmployee.HireDate;
+
+                DepartmentComboBox.SelectedItem = selectedEmployee.Department;
+
+                UpdateButton.IsEnabled = true;
+                DeleteButton.IsEnabled = true;
+                AddButton.IsEnabled = false;
+            }
+            else
+            {
+                UpdateButton.IsEnabled = false;
+                DeleteButton.IsEnabled = false;
+            }
+        }
+        
+        private void Clear()
+        {
+            EmployeeNameTextBox.Clear();
+            SalaryTextBox.Clear();
+            HireDatePicker.SelectedDate = null;
+            DepartmentComboBox.SelectedItem = null;
+        }
+    
     }
 }

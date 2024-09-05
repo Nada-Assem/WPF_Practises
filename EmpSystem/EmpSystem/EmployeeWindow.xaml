@@ -6,26 +6,55 @@
         mc:Ignorable="d"
         Title="Employee Management System" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="EmployeeDataGrid" HorizontalAlignment="Left" Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="760" 
-          AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="EmployeeDataGrid_SelectionChanged">
+        <!-- Define Rows and Columns -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- DataGrid Row -->
+            <RowDefinition Height="Auto"/>
+            <!-- Input Fields Row -->
+            <RowDefinition Height="Auto"/>
+            <!-- Buttons Row -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <!-- For TextBox Fields -->
+            <ColumnDefinition Width="2*"/>
+            <!-- For ComboBox and DatePicker -->
+            <ColumnDefinition Width="1*"/>
+            <!-- For Buttons -->
+        </Grid.ColumnDefinitions>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="EmployeeDataGrid" Grid.Row="0" Grid.ColumnSpan="3"
+                  AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="EmployeeDataGrid_SelectionChanged"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="200">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="100"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
                 <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" Width="100"/>
-                <DataGridTextColumn Header="Hire Date" Binding="{Binding HireDate}" Width="100"/>
+                <DataGridTextColumn Header="Hire Date" Binding="{Binding HireDate,StringFormat=\{0:dd/MM/yyyy\}}" Width="100"/>
                 <DataGridTextColumn Header="Department" Binding="{Binding Department.Name}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <TextBox x:Name="EmployeeNameTextBox" HorizontalAlignment="Left" Height="25" Margin="10,220,0,0" VerticalAlignment="Top" Width="200" Text="Enter Name"/>
-        <TextBox x:Name="SalaryTextBox" HorizontalAlignment="Left" Height="25" Margin="220,220,0,0" VerticalAlignment="Top" Width="200" Text="Enter Salary"/>
-        <DatePicker x:Name="HireDatePicker" HorizontalAlignment="Left" Height="25" Margin="430,220,0,0" VerticalAlignment="Top" Width="200"/>
+        <!-- Input Fields -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBox x:Name="EmployeeNameTextBox" Height="25" Width="200" Margin ="15"  Text="Enter Name"/>
+            <TextBox x:Name="SalaryTextBox" Height="25" Width="200" Text="Enter Salary"/>
+        </StackPanel>
 
-        <ComboBox x:Name="DepartmentComboBox" HorizontalAlignment="Left" Height="25" Margin="10,260,0,0" VerticalAlignment="Top" Width="200"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <DatePicker Margin ="15" x:Name="HireDatePicker" Height="25" Width="200" />
+            <ComboBox x:Name="DepartmentComboBox" Height="25" Width="200"/>
+        </StackPanel>
 
-        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="220,260,0,0" VerticalAlignment="Top" Width="100" Click="AddButton_Click"/>
-        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="330,260,0,0" VerticalAlignment="Top" Width="100" Click="UpdateButton_Click"/>
-        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="440,260,0,0" VerticalAlignment="Top" Width="100" Click="DeleteButton_Click"/>
-        <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="550,260,0,0" VerticalAlignment="Top" Width="100" Click="RefreshButton_Click"/>
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+            <Button x:Name="AddButton" Content="Add" Width="100" Click="AddButton_Click" Margin="10,0"/>
+            <Button x:Name="UpdateButton" Content="Update" Width="100" Click="UpdateButton_Click" Margin="10,0"/>
+            <Button x:Name="DeleteButton" Content="Delete" Width="100" Click="DeleteButton_Click" Margin="10,0"/>
+            <Button x:Name="RefreshButton" Content="Refresh" Width="100" Click="RefreshButton_Click" Margin="10,0"/>
+        </StackPanel>
     </Grid>
 </Window>
