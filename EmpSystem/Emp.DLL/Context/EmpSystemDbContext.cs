@@ -15,7 +15,7 @@ namespace Emp.DLL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Configuration is done in ConfigureServices
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
